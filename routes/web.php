@@ -6,7 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChirpController;
 
 Route::get("/", function () {
-    return view("welcome");
+    return view("welcome2");
+});
+
+Route::get('ID/{id}', function($id){
+    echo 'ID: '.$id;
 });
 
 Route::get("/dashboard", function () {
@@ -30,5 +34,16 @@ Route::middleware("auth")->group(function () {
 Route::resource("chirps", ChirpController::class)
     ->only(["index", "store", 'edit', 'update', 'destroy'])
     ->middleware(["auth", "verified"]);
+
+Route::get('/registerr', function(){
+    return view('tryregister');
+});
+
+Route::post('/user/registerr', array('uses'=>'UserRegistration@postRegister'));
+ 
+Route::get('/json', function(){
+    // return response(["product" => "Carrots", "Price" => 200])->header('Content-Type', 'application/json');
+    return view('json', ["product" => "Carrots", "price" => 200]);
+});
 
 require __DIR__ . "/auth.php";
